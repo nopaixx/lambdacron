@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lambda function example.
+Resources:
+        LambdaFunction:
+                Type: AWS::Lambda::Function
+                Properties:
+                        Runtime: python3.7
+                        Handler: project.lambda_handler
+                        CodeUri: : iac/dept-project-dosomenting-function.zip
+                        Description: Invoke a function during stack creation.
+                        TracingConfig:
+                                Mode: Active
+                        VpcConfig:
+                                SecurityGroupIds:
+                                  - sg-085912345678492fb
+                                SubnetIds:
+                                  - subnet-071f712345678e7c8
+                                  - subnet-07fd123456788a036
+
+ScheduledRule:
+        Type: AWS::Events::Rule
+        Properties:
+                Description: "ScheduledRule"
+                ScheduleExpression: "rate(10 minutes)"
+                State: "ENABLED"
+                Targets:
+                        - Arn:
+                                  Fn::GetAtt:
+                                          - "LambdaFunction"
+                                          - "Arn"
+                          Id: "TargetFunctionV1"
+PermissionForEventsToInvokeLambda:
+        Type: AWS::Lambda::Permission
+        Properties:
+                FunctionName: !Ref "LambdaFunction"
+                Action: "lambda:InvokeFunction"
+                Principal: "events.amazonaws.com"
+                SourceArn:
+                        Fn::GetAtt:
+                                - "ScheduledRule"
+                                - "Arn"

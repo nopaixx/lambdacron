@@ -1,0 +1,14 @@
+#!groovy
+
+pipeline {
+	stages {
+		stage('Packaging lambda'){
+			sh 'py-lambda-packer'
+		}
+		stage('Deploy Infra to aws'){
+			# IF you use terraform is better!
+			sh 'python iac/deploy.py DEPT-PROJECT-doSomething-function iac/template.yaml'
+		}
+	}
+}
+
