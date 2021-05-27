@@ -6,8 +6,7 @@ packager:
         target: iac/dept-project-dosomenting-function.zip
         followlinks: true
         includes:
-                - project/***
+                - project/**
         excludes:
-                - tests/**
                 - JenkinsFile
                 - py-lambda-packer.yaml
