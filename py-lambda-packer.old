@@ -1,0 +1,16 @@
+virutalenv:
+        python: 3.7
+        pip:
+                requirements:
+                        - requirements.txt
+                packages:
+                        - .
+
+packager:
+        target: iac/dept-project-dosomenting-function.zip
+        followlinks: true
+        includes:
+                - project/**
+        excludes:
+                - JenkinsFile
+                - py-lambda-packer.yaml
