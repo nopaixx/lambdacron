@@ -3,11 +3,12 @@ virtualenv:
   pip:
     requirements:
       - requirements.txt
-
+        
 packager:
   target: py-lambda-package.zip
   followlinks: true
   includes:
+    - project/**
     - LICENSE
     - static/**
     - templates/**/*.html
